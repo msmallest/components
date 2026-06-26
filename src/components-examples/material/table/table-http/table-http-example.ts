@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Component, ViewChild, AfterViewInit, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ViewChild, AfterViewInit, inject} from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSort, MatSortModule, SortDirection} from '@angular/material/sort';
 import {merge, Observable, of as observableOf} from 'rxjs';
@@ -16,6 +16,7 @@ import {DatePipe} from '@angular/common';
   styleUrl: 'table-http-example.css',
   templateUrl: 'table-http-example.html',
   imports: [MatProgressSpinnerModule, MatTableModule, MatSortModule, MatPaginatorModule, DatePipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
 })
 export class TableHttpExample implements AfterViewInit {
   private _httpClient = inject(HttpClient);
