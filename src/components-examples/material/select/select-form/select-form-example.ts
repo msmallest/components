@@ -3,6 +3,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
+import {signal} from '@angular/core';
 
 interface Food {
   value: string;
@@ -23,8 +24,8 @@ interface Car {
   imports: [FormsModule, MatFormFieldModule, MatSelectModule, MatInputModule],
 })
 export class SelectFormExample {
-  selectedValue!: string;
-  selectedCar = '';
+  selectedValue = signal('');
+  selectedCar = signal('');
 
   foods: Food[] = [
     {value: 'steak-0', viewValue: 'Steak'},
