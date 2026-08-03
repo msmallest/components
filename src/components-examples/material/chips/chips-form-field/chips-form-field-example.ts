@@ -7,15 +7,15 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 
 /**
- * @title Chips with form field (signal forms)
+ * @title Chips with form field
  */
 @Component({
-  selector: 'chips-signal-form-example',
-  templateUrl: 'chips-signal-form-example.html',
-  styleUrl: 'chips-signal-form-example.css',
+  selector: 'chips-form-field-example',
+  templateUrl: 'chips-form-field-example.html',
+  styleUrl: 'chips-form-field-example.css',
   imports: [FormField, MatButtonModule, MatFormFieldModule, MatChipsModule, MatIconModule],
 })
-export class ChipsSignalFormExample {
+export class ChipsFormFieldExample {
   readonly keywords = signal(['angular', 'how-to', 'tutorial', 'accessibility']);
 
   protected model = signal({
