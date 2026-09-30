@@ -848,7 +848,7 @@ describe('MatSelect signal form', () => {
           multiFixture.componentInstance.select.open();
           multiFixture.detectChanges();
 
-          expect(multiFixture.componentInstance.select.value).toBeFalsy();
+          expect(multiFixture.componentInstance.select.value).toEqual([]);
 
           dispatchEvent(select, event);
           multiFixture.detectChanges();
@@ -879,8 +879,10 @@ describe('MatSelect signal form', () => {
             multiFixture.detectChanges();
           }
 
-          console.log(multiFixture.componentInstance.select.value);
-          expect(multiFixture.componentInstance.select.value).toBeFalsy();
+          console.log('=====================+====================');
+          console.log('VALUE', multiFixture.componentInstance.select.value);
+          console.log('=====================+====================');
+          expect(multiFixture.componentInstance.select.value).toEqual([]);
 
           dispatchEvent(select, event);
           multiFixture.detectChanges();
@@ -4085,6 +4087,7 @@ describe('MatSelect signal form', () => {
     it('should throw an exception when trying to set a non-array value', () => {
       expect(() => {
         testInstance.model.set('not-an-array' as any);
+        fixture.detectChanges();
       }).toThrowError(wrappedErrorMessage(getMatSelectNonArrayValueError()));
     });
 
@@ -4155,7 +4158,7 @@ describe('MatSelect signal form', () => {
       const selectElement = fixture.nativeElement.querySelector('mat-select');
       const options = fixture.componentInstance.options.toArray();
 
-      expect(testInstance.control().value()).toBeFalsy();
+      expect(testInstance.control().value()).toEqual([]);
       expect(options.every(option => option.selected)).toBe(false);
 
       fixture.componentInstance.select.open();
@@ -4186,7 +4189,7 @@ describe('MatSelect signal form', () => {
         options[i].disabled = true;
       }
 
-      expect(testInstance.control().value()).toBeFalsy();
+      expect(testInstance.control().value()).toEqual([]);
 
       fixture.componentInstance.select.open();
       fixture.detectChanges();
@@ -4335,7 +4338,8 @@ describe('MatSelect signal form', () => {
       expect(optionInstances.some(option => option.selected)).toBe(false);
 
       value.push('eggs-5');
-      testInstance.model.set(value);
+      // need new reference for signal equality reference
+      testInstance.model.set([...value]);
       fixture.detectChanges();
 
       expect(optionNodes[5].classList).toContain('mdc-list-item--selected');
