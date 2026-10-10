@@ -4,9 +4,9 @@
     <input matInput
            aria-label="State"
            [matAutocomplete]="auto"
-           [formControl]="stateCtrl">
+           [formField]="stateField.value">
     <mat-autocomplete #auto="matAutocomplete">
-      @for (state of filteredStates | async; track state) {
+      @for (state of filteredStates(); track state) {
         <mat-option [value]="state.name">
           <img alt="" class="example-option-img" [src]="state.flag" height="25">
           <span>{{state.name}}</span> |
@@ -19,8 +19,8 @@
   <br>
 
   <mat-slide-toggle
-    [checked]="stateCtrl.disabled"
-    (change)="stateCtrl.disabled ? stateCtrl.enable() : stateCtrl.disable()">
+    [checked]="stateField.disabled().value"
+    (change)="stateField().value.update(value => ({...value, disabled: !value.disabled}))">
     Disable Input?
   </mat-slide-toggle>
 </form>

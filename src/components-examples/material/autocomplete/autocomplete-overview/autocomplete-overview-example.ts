@@ -1,9 +1,6 @@
-import {Component} from '@angular/core';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import {Component, computed, signal} from '@angular/core';
+import {disabled, form, FormField} from '@angular/forms/signals';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {AsyncPipe} from '@angular/common';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -22,20 +19,24 @@ export interface State {
   templateUrl: 'autocomplete-overview-example.html',
   styleUrl: 'autocomplete-overview-example.css',
   imports: [
-    FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
-    ReactiveFormsModule,
     MatSlideToggleModule,
-    AsyncPipe,
+    FormField,
   ],
 })
 export class AutocompleteOverviewExample {
-  stateCtrl = new FormControl('');
-  filteredStates: Observable<State[]>;
+  protected stateField = form(signal({value: '', disabled: false}), p => {
+    disabled(p.value, {
+      when: ({valueOf}) => valueOf(p.disabled),
+    });
+  });
+  protected filteredStates = computed<State[]>(() =>
+    this._filterStates(this.stateField().value().value),
+  );
 
-  states: State[] = [
+  protected states: State[] = [
     {
       name: 'Arkansas',
       population: '2.978M',
@@ -61,13 +62,6 @@ export class AutocompleteOverviewExample {
       flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Texas.svg',
     },
   ];
-
-  constructor() {
-    this.filteredStates = this.stateCtrl.valueChanges.pipe(
-      startWith(''),
-      map(state => (state ? this._filterStates(state) : this.states.slice())),
-    );
-  }
 
   private _filterStates(value: string): State[] {
     const filterValue = value.toLowerCase();
