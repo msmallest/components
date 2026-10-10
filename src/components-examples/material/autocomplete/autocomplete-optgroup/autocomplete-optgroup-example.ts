@@ -1,9 +1,8 @@
 import {Component, computed, signal} from '@angular/core';
-import {FormField, FormRoot} from '@angular/forms/signals';
+import {FormField, FormRoot, form} from '@angular/forms/signals';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {form} from '@angular/forms/signals';
 
 export interface StateGroup {
   letter: string;

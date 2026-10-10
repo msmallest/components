@@ -3,7 +3,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {JsonPipe} from '@angular/common';
-import {form, FormField, required, validate} from '@angular/forms/signals';
+import {form, FormField, validate} from '@angular/forms/signals';
 
 export interface User {
   name: string;
