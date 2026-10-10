@@ -1,14 +1,14 @@
-<form [formGroup]="stateForm">
+<form [formRoot]="stateForm">
   <mat-form-field>
     <mat-label>States Group</mat-label>
     <input type="text"
            matInput
-           formControlName="stateGroup"
+           [formField]="stateForm.stateGroup"
            required
            [matAutocomplete]="autoGroup">
 <!-- #docregion mat-autocomplete -->
       <mat-autocomplete #autoGroup="matAutocomplete">
-        @for (group of stateGroupOptions | async; track group) {
+        @for (group of stateGroupOptions(); track group) {
           <mat-optgroup [label]="group.letter">
             @for (name of group.names; track name) {
               <mat-option [value]="name">{{name}}</mat-option>
