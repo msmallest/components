@@ -1,8 +1,5 @@
-import {Component} from '@angular/core';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
-import {AsyncPipe} from '@angular/common';
+import {Component, computed, signal} from '@angular/core';
+import {form, FormField} from '@angular/forms/signals';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -14,26 +11,13 @@ import {MatFormFieldModule} from '@angular/material/form-field';
   selector: 'autocomplete-filter-example',
   templateUrl: 'autocomplete-filter-example.html',
   styleUrl: 'autocomplete-filter-example.css',
-  imports: [
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatAutocompleteModule,
-    ReactiveFormsModule,
-    AsyncPipe,
-  ],
+  imports: [MatFormFieldModule, MatInputModule, MatAutocompleteModule, FormField],
 })
 export class AutocompleteFilterExample {
-  myControl = new FormControl('');
-  options: string[] = ['One', 'Two', 'Three'];
-  filteredOptions: Observable<string[]>;
+  protected form = form(signal(''));
+  protected options = ['One', 'Two', 'Three'] as const;
 
-  constructor() {
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value || '')),
-    );
-  }
+  protected filteredOptions = computed(() => this._filter(this.form().value()));
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
