@@ -30,7 +30,7 @@ describe('FormFieldHarnessExample', () => {
     expect(await formField.getTextErrors()).toEqual([]);
     expect(await formField.getTextHints()).toEqual(['Hint']);
 
-    fixture.componentInstance.requiredControl.setValue('');
+    fixture.componentInstance.model.set('');
     await ((await formField.getControl()) as MatInputHarness)?.blur();
     expect(await formField.getTextErrors()).toEqual(['Error']);
     expect(await formField.getTextHints()).toEqual([]);
@@ -40,7 +40,7 @@ describe('FormFieldHarnessExample', () => {
     const formField = await loader.getHarness(MatFormFieldHarness);
     expect(await formField.isControlValid()).toBe(true);
 
-    fixture.componentInstance.requiredControl.setValue('');
+    fixture.componentInstance.model.set('');
     expect(await formField.isControlValid()).toBe(false);
   });
 });
